@@ -11,12 +11,14 @@ function StudentNameDisplay() {
         <span className="badge badge-blue">useState</span>
         <span className="card-title">Student Name Display</span>
       </div>
+
       <div className="card-body">
         <h2 className="task-name">Student Name Display</h2>
         <p className="info">
           Type your name below. The greeting updates live using{" "}
           <code>useState</code>.
         </p>
+
         <input
           type="text"
           placeholder="Enter your name…"
@@ -25,6 +27,7 @@ function StudentNameDisplay() {
           onChange={(e) => setName(e.target.value)}
           className="hook-input"
         />
+
         <div className={`welcome-msg ${name ? "active" : "empty"}`}>
           {name ? `Welcome, ${name}!` : "Welcome, …"}
         </div>
@@ -35,20 +38,19 @@ function StudentNameDisplay() {
 
 // ─── useEffect Task ──────────────────────────────────────────────
 function WelcomeAlert() {
-  const [alerted, setAlerted] = useState(false);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
     setShow(true);
-    const timer = setTimeout(() => setShow(false), 3500);
-    alert("PLZ reload after some time");
-  }, []);
 
-  const simulateMount = () => {
-    setShow(true);
-    setTimeout(() => setShow(false), 3500);
-    setAlerted(true);
-  };
+    const timer = setTimeout(() => {
+      setShow(false);
+    }, 3500);
+
+    alert("PLZ reload after some time");
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="hook-card">
@@ -56,14 +58,16 @@ function WelcomeAlert() {
         <span className="badge badge-purple">useEffect</span>
         <span className="card-title">Welcome Alert</span>
       </div>
+
       <div className="card-body">
         <h2 className="task-name">Welcome Alert</h2>
         <p className="info">
           On mount, <code>useEffect</code> fires once and shows an alert.
-          Click the button to simulate it again.
         </p>
+
         {show && (
           <div className="alert-flash">
+            Welcome!
           </div>
         )}
       </div>
@@ -86,12 +90,14 @@ function MultiplyByTwo() {
         <span className="badge badge-teal">useMemo</span>
         <span className="card-title">Multiply Number by 2</span>
       </div>
+
       <div className="card-body">
         <h2 className="task-name">Multiply Number by 2</h2>
         <p className="info">
           Enter a number and click Calculate. <code>useMemo</code> caches
           the result and only recomputes when the number changes.
         </p>
+
         <div className="row">
           <input
             type="number"
@@ -104,6 +110,7 @@ function MultiplyByTwo() {
               setSubmitted(false);
             }}
           />
+
           <button
             className="hook-btn primary"
             onClick={() => setSubmitted(true)}
@@ -111,6 +118,7 @@ function MultiplyByTwo() {
             Calculate
           </button>
         </div>
+
         {submitted && (
           <div className="memo-row">
             <span className="num-big">{number}</span>
@@ -147,22 +155,28 @@ function ShowWelcomeMessage() {
         <span className="badge badge-coral">useCallback</span>
         <span className="card-title">Show Welcome Message</span>
       </div>
+
       <div className="card-body">
         <h2 className="task-name">Show Welcome Message</h2>
         <p className="info">
           Two buttons each hold a memoized callback via{" "}
           <code>useCallback</code>. Click either to show its message.
         </p>
+
         <div className="row">
           <button className="hook-btn" onClick={handleButtonA}>
             Button A
           </button>
+
           <button className="hook-btn" onClick={handleButtonB}>
             Button B
           </button>
         </div>
+
         {message && (
-          <div className={`msg-box ${message.type}`}>{message.text}</div>
+          <div className={`msg-box ${message.type}`}>
+            {message.text}
+          </div>
         )}
       </div>
     </div>
